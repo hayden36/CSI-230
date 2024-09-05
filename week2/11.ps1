@@ -1,3 +1,3 @@
-﻿$files=Get-ChildItem -Recurse -Depth 0
-$files | Rename_item -NewName {$_.name -replace ".ps1", ".log"}
-Get-ChildItem
+﻿$files=Get-ChildItem -Recurse -File
+$files | Rename-Item -NewName {$_.name -replace ".csv", ".log"}
+Get-ChildItem -Path "$PSScriptRoot/outfolder"
