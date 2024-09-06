@@ -1,0 +1,1 @@
+﻿(Get-DnsClientServerAddress -AddressFAmily IPv4 | Where-Object {$_.InterfaceAlias -ilike "Ethernet*"}).ServerAddresses

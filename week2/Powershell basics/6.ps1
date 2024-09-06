@@ -1,0 +1,1 @@
+﻿Get-CimInstance Win32_NetworkAdapterConfiguration -Filter "DHCPEnabled=$true" | Select DHCPServer | Format-Table -AutoSize -HideTableHeaders
