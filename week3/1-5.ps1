@@ -48,7 +48,7 @@ for ($i=0; $i -lt $loginouts.Count; $i++) {
                                              "Event" =$event; `
                                             "User" = $user;
                                             }
-}
+    }
 $loginoutsTable | Format-Table -AutoSize -Wrap
 }
 
