@@ -36,3 +36,8 @@ $counts | Select-Object Count, Name
 # Functions
 . (Join-Path "C:\Users\champuser\CSI-230\week4" Apache-Logs.ps1)
 ApacheLogs1 -page "/" -httpCode 200 -browserName "Firefox"
+
+
+# Parsing Apache Logs
+. (Join-Path "C:\Users\champuser\CSI-230\week4" ParseApacheLogs.ps1)
+Parse-ApacheLogs | Ft -AutoSize -Wrap
