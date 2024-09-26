@@ -26,7 +26,7 @@ $ips = @()
 for ($i=0; $i -lt $ipsUnorg.Count; $i++) {
     $ips += [pscustomobject]@{"IP" = $ipsUnorg[$i].Value;}
 }
-#$ips | Where-Object {$_.IP -ilike "10.*"}
+$ips | Where-Object {$_.IP -ilike "10.*"}
 
 #9. Get $ips from 8.
 $ipsoften = $ips | Where-Object {$_.IP -ilike "10.*"}
