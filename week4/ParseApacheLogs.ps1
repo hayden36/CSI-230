@@ -17,3 +17,5 @@
     }
     return $tableRecords | Where-Object {$_.IP -ilike "10.*" }
    }
+$tableRecords = Parse-Logs
+$tableRecords | Format-Table -AutoSize -Wrap

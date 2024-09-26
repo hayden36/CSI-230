@@ -41,9 +41,6 @@ $counts = $ipsoften | Group-Object IP
 $counts | Select-Object Count, Name
 
 
-
-## Parsing Logs Assignment
-#. (Join-Path $PSScriptRoot ParseApacheLogs.ps1)
-#cls
-#$parseLogs = Parse-Logs
-#$parseLogs | Ft -AutoSize -Wrap
+# Parsing Logs Assignment
+. (Join-Path "C:\Users\champuser\CSI-230\week4" Apache-Logs.ps1)
+ApacheLogs1 -page "/" -httpCode 200 -browserName "Firefox"
