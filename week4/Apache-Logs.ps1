@@ -20,7 +20,7 @@
                                            "Client" = $words[11..($words.Length)]; }
 
     }
-    $tableRecords = $tableRecords | Where-Object {$_.Page -ilike "*$page*" -and $_.Response -eq $httpCode -and $_.Client -ilike "*$browserName*"}
+    $tableRecords = $tableRecords | Where-Object {$_.Page -eq "$page" -and $_.Response -eq $httpCode -and $_.Client -ilike "*$browserName*"}
   
 
     $counts = $tableRecords | Group-Object IP
