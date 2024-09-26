@@ -19,7 +19,16 @@
             "Location" = $tds[9].innerHtml; `
          }   
     }
+
     return $FullTable
 }
 
-gatherClasses
+
+function daysTranslator {
+    param($FullTable)
+    for ($i=0; $i -lt $FullTable.length; $i++) {
+        $Days = @()
+
+      if ($FullTable[$i].Value -like "*M*") {$Days += "Monday"}
+    }
+}
