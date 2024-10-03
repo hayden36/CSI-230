@@ -30,6 +30,7 @@ function daysTranslator {
         $Days = @()
 
       if ($FullTable[$i].Days -like "*M*") {$Days += "Monday"}
+      if ($FullTable[$i].Days -like "T") {$Days += "Tuesday"}
       if ($FullTable[$i].Days -like "*T[WF]*") {$Days += "Tuesday"}
       if ($FullTable[$i].Days -like "*W*") {$Days += "Wednesday"}
       if ($FullTable[$i].Days -like "*TH*") {$Days += "Thursday"}
