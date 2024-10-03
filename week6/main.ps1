@@ -46,27 +46,30 @@ while($operation){
     elseif($choice -eq 3){ 
 
         $name = Read-Host -Prompt "Please enter the username for the new user"
-        $password = Read-Host -AsSecureString -Prompt "Please enter the password for the new user"
+        
+        $chkUser = checkuser $name
+        if ($chkUser -ne $true) {
+            
+            $password = Read-Host -AsSecureString -Prompt "Please enter the password for the new user"
 
-        # TODO: Create a function called checkUser in Users that: 
-        #              - Checks if user a exists. 
-        #              - If user exists, returns true, else returns false
-        # TODO: Check the given username with your new function.
-        #              - If false is returned, continue with the rest of the function
-        #              - If true is returned, do not continue and inform the user
-        #
-        # TODO: Create a function called checkPassword in String-Helper that:
-        #              - Checks if the given string is at least 6 characters
-        #              - Checks if the given string contains at least 1 special character, 1 number, and 1 letter
-        #              - If the given string does not satisfy conditions, returns false
-        #              - If the given string satisfy the conditions, returns true
-        # TODO: Check the given password with your new function. 
-        #              - If false is returned, do not continue and inform the user
-        #              - If true is returned, continue with the rest of the function
+            $bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($password)
+            $plainpassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
 
-        createAUser $name $password
+            $chkPassword = checkPassword $plainpassword
 
-        Write-Host "User: $name is created." | Out-String
+            if ($chkPassword -ne $false) {
+                createAUser $name $password
+                Write-Host "User: $name is created." | Out-String
+            } else {
+                Write-Host "Password does not meet requirements" | Out-String
+            }
+            
+            } else {
+                Write-Host "User $name already exists." | Out-String
+            }
+
+
+       
     }
 
 
@@ -76,6 +79,10 @@ while($operation){
         $name = Read-Host -Prompt "Please enter the username for the user to be removed"
 
         # TODO: Check the given username with the checkUser function.
+        # TODO: Check the given username with your new function.
+        #              - If false is returned, continue with the rest of the function
+        #              - If true is returned, do not continue and inform the user
+        #
 
         removeAUser $name
 
