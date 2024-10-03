@@ -10,7 +10,7 @@
         $Times = $tds[5].innerText.split("-")
         
         $FullTable += [pscustomobject]@{ `
-            "ClassCode" = $tds[0].innerHtml; `
+            "Class Code" = $tds[0].innerHtml; `
             "Title" = $tds[1].getElementsByTagName("a")[0].innerText; `
             "Days" = $tds[4].innerHtml; `
             "Time Start" = $Times[0]; `
@@ -29,6 +29,15 @@ function daysTranslator {
     for ($i=0; $i -lt $FullTable.length; $i++) {
         $Days = @()
 
-      if ($FullTable[$i].Value -like "*M*") {$Days += "Monday"}
+      if ($FullTable[$i].Days -like "*M*") {$Days += "Monday"}
+      if ($FullTable[$i].Days -like "*T[WF]*") {$Days += "Tuesday"}
+      if ($FullTable[$i].Days -like "*W*") {$Days += "Wednesday"}
+      if ($FullTable[$i].Days -like "*TH*") {$Days += "Thursday"}
+      if ($FullTable[$i].Days -like "*F*") {$Days += "Friday"}
+
+      $FullTable[$i].Days = $Days
     }
+
+    return $FullTable
 }
+
