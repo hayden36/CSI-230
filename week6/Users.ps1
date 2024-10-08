@@ -3,10 +3,10 @@
 <# ******************************
 # Create a function that returns a list of NAMEs AND SIDs only for enabled users
 ****************************** #>
-function getEnabledUsers(){
+function getEnabledUsers() {
 
-  $enabledUsers = Get-LocalUser | Where-Object { $_.Enabled -ilike "True" } | Select-Object Name, SID
-  return $enabledUsers
+   $enabledUsers = Get-LocalUser | Where-Object { $_.Enabled -ilike "True" } | Select-Object Name, SID
+   return $enabledUsers
 
 }
 
@@ -15,10 +15,10 @@ function getEnabledUsers(){
 <# ******************************
 # Create a function that returns a list of NAMEs AND SIDs only for not enabled users
 ****************************** #>
-function getNotEnabledUsers(){
+function getNotEnabledUsers() {
 
-  $notEnabledUsers = Get-LocalUser | Where-Object { $_.Enabled -ilike "False" } | Select-Object Name, SID
-  return $notEnabledUsers
+   $notEnabledUsers = Get-LocalUser | Where-Object { $_.Enabled -ilike "False" } | Select-Object Name, SID
+   return $notEnabledUsers
 
 }
 
@@ -28,11 +28,11 @@ function getNotEnabledUsers(){
 <# ******************************
 # Create a function that adds a user
 ****************************** #>
-function createAUser($name, $password){
+function createAUser($name, $password) {
 
    $params = @{
-     Name = $name
-     Password = $password
+      Name     = $name
+      Password = $password
    }
 
    $newUser = New-LocalUser @params 
@@ -50,7 +50,7 @@ function createAUser($name, $password){
 
 
 
-function removeAUser($name){
+function removeAUser($name) {
    
    $userToBeDeleted = Get-LocalUser | Where-Object { $_.name -ilike $name }
    Remove-LocalUser $userToBeDeleted
@@ -59,7 +59,7 @@ function removeAUser($name){
 
 
 
-function disableAUser($name){
+function disableAUser($name) {
    
    $userToBeDeleted = Get-LocalUser | Where-Object { $_.name -ilike $name }
    Disable-LocalUser $userToBeDeleted
@@ -67,20 +67,21 @@ function disableAUser($name){
 }
 
 
-function enableAUser($name){
+function enableAUser($name) {
    
    $userToBeEnabled = Get-LocalUser | Where-Object { $_.name -ilike $name }
    Enable-LocalUser $userToBeEnabled
    
 }
 
+# returns true if the user exists
 function checkUser {
-    param($name)
-    $users = Get-LocalUser | Where-Object {$_.name -ilike $name}
-    if ($users.Count -lt 1) { 
-        return $false
-    }
-    else {
-        return $true
-    }
+   param($name)
+   $users = Get-LocalUser | Where-Object { $_.name -ilike $name }
+   if ($users.Count -lt 1) { 
+      return $false
+   }
+   else {
+      return $true
+   }
 }
