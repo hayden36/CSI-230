@@ -136,7 +136,7 @@ while ($operation) {
         Write-Host "How many days would you like to search?"
         $days = Read-Host
         $userLogins = getFailedLogins $days 
-        $userlogins = $userlogins | Group-Object User | Select-Object Name, Count | Where-Object { $_.Count -gt 10 }
+        $userlogins = $userlogins | Group-Object User | Select-Object Name, Count, Time | Where-Object { $_.Count -gt 10 }
         $userLogins | Format-Table -AutoSize -Wrap
      
     }
