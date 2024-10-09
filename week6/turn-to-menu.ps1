@@ -1,28 +1,6 @@
 ﻿. (Join-Path $PSScriptRoot Users.ps1)
 . (Join-Path $PSScriptRoot Event-Logs.ps1)
-
-
-# Functions
-function Parse-ApacheLogs {
-    $logsNotFormatted = Get-Content C:\xampp\apache\logs\access.log
-    $tableRecords = @()
-
-    for ($i = 0; $i -lt $logsNotFormatted.Length; $i++) {
-        $words = $logsNotFormatted[$i].Split(" ")
-        $tableRecords += [pscustomobject]@{"IP" = $words[0]; `
-                "Time"                          = $words[3].Trim('['); `
-                "Method"                        = $words[5].Trim('"'); `
-                "Page"                          = $words[6]; `
-                "Protocol"                      = $words[7]; `
-                "Response"                      = $words[8]; `
-                "Referer"                       = $words[10]; `
-                "Client"                        = $words[11..($words.Length)]; 
-        }
-
-    }
-    return $tableRecords | Where-Object { $_.IP -ilike "10.*" }
-}
-
+. (Join-Path $PSScriptRoot ttm-functions.ps1)
 
 # Main logic
 clear
@@ -38,21 +16,23 @@ $options += "4. Start chrome and open champlain.edu. `n"
 $options += "5. Exit.`n"
 
 while ($inLoop) {
-    Write-Host "Please choose an option: "
     Write-Host $options
-    $choice = Read-Host
+    $choice = Read-Host "Please choose an option"
     if ($choice -eq 1) {
         $records = Parse-ApacheLogs | Format-Table
         $records
     }
     elseif ($choice -eq 2) {
         # Display failed logins
-        # TODO
+        $userLogins = getFailedLoginsRecent 
+        $userlogins = $userlogins | Select-Object Time, User
+        $userLogins | Format-Table -AutoSize -Wrap
     }
     elseif ($choice -eq 3) {
         # At-risk users
+        $days = Read-Host "Enter the number of days to search for"
         $userLogins = getFailedLogins $days 
-        $userlogins = $userlogins | Group-Object User | Select-Object Name, Count, Time | Where-Object { $_.Count -gt 10 }
+        $userlogins = $userlogins | Group-Object User | Select-Object Name, Count | Where-Object { $_.Count -gt 10 }
         $userLogins | Format-Table -AutoSize -Wrap
     }
     elseif ($choice -eq 4) {
