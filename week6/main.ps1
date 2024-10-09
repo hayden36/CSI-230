@@ -111,9 +111,10 @@ while ($operation) {
     }
     elseif ($choice -eq 7) {
         $name = Read-Host -Prompt "Please enter the username for the user logs"
+        $days = Read-Host -Prompt "How many days would you like to search?"
 
         if (checkUser $name -eq $true) {
-            $userLogins = getLogInAndOffs 90
+            $userLogins = getLogInAndOffs $days
             Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name" } | Format-Table | Out-String)
         }
         else {
@@ -122,9 +123,9 @@ while ($operation) {
     }
     elseif ($choice -eq 8) {
         $name = Read-Host -Prompt "Please enter the username for the user's failed login logs"
-
+        $days = Read-Host -Prompt "How many days would you like to search?"
         if (checkUser $name -eq $true) {
-            $userLogins = getFailedLogins 90
+            $userLogins = getFailedLogins $days
             Write-Host ($userLogins | Where-Object { $_.User -ilike "*$name" } | Format-Table | Out-String)
         }
         else {
