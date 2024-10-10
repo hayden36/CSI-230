@@ -1,12 +1,12 @@
 function readConfiguration {
-    $configurationContent = Get-Content .\configuration.txt
+    $configurationContent = Get-Content "$PSScriptRoot\configuration.txt"
     # https://stackoverflow.com/questions/39252620/powershell-split-specify-a-new-line
     $configurationContent = $configurationContent.Split([Environment]::NewLine, [StringSplitOptions]::RemoveEmptyEntries)
     $configurationObject = [pscustomobject]@{
         Days = $configurationContent[0];
         Time = $configurationContent[1];
     }
-    $configurationObject  | Format-Table
+    return $configurationObject  #| Format-Table
 }
 
 
