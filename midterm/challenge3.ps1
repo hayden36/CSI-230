@@ -12,5 +12,4 @@ for ($j = 0; $j -lt $indicators.Length; $j++) {
     $filteredLogs += $allLogs | Where-Object { $_."Page" -ilike "*$b*" } 
 }
 
-
 $filteredLogs | Format-Table -AutoSize -Wrap
