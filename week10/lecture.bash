@@ -18,9 +18,17 @@ function getPageCount() {
 	allLogs=$(cat "$file" | cut -d ' ' -f 7 | tr -d "[" | sort | uniq -c)
 }
 
-getAllLogs
-ips
-echo "$ipsAccessed" 
+#getAllLogs
+#ips
+#echo "$ipsAccessed" 
 
-getPageCount
+#getPageCount
+#echo "$allLogs"
+
+
+function countCurlAccess() {
+	allLogs=$(cat "$file" | grep -i "curl" | cut -d ' ' -f 1,12 | tr -d "[" | sort | uniq -c) 	
+}
+countCurlAccess
 echo "$allLogs"
+
