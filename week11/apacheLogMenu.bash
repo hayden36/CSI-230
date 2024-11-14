@@ -45,7 +45,8 @@ function histogram(){
 # only with daily number of visits that are greater than 10 
 
 function frequentVisitors() {
-	echo "$(displayOnlyIPs |  awk '$1 > 10')"
+	local visitsPerDay=$(cat "$logFile" | cut -d " " -f 1,4 | tr -d '[' | cut -d ':' -f 1 | sort -n | uniq -c)
+	echo "$visitsPerDay" | awk '$1 > 10' 
 }
 
 # function: suspiciousVisitors
