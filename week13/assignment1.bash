@@ -8,25 +8,25 @@ courseFile="courses.txt"
 
 function displayCoursesofInst(){
 
-echo -n "Please Input an Instructor Full Name: "
-read instName
+	echo -n "Please Input an Instructor Full Name: "
+	read instName
 
-echo ""
-echo "Courses of $instName :"
-cat "$courseFile" | grep "$instName" | cut -d';' -f1,2 | \
-sed 's/;/ | /g'
-echo ""
+	echo ""
+	echo "Courses of $instName :"
+	cat "$courseFile" | grep "$instName" | cut -d';' -f1,2 | \
+	sed 's/;/ | /g'
+	echo ""
 
 }
 
 function courseCountofInsts(){
 
-echo ""
-echo "Course-Instructor Distribution"
-cat "$courseFile" | cut -d';' -f7 | \
-grep -v "/" | grep -v "\.\.\." | \
-sort -n | uniq -c | sort -n -r 
-echo ""
+	echo ""
+	echo "Course-Instructor Distribution"
+	cat "$courseFile" | cut -d';' -f7 | \
+	grep -v "/" | grep -v "\.\.\." | \
+	sort -n | uniq -c | sort -n -r 
+	echo ""
 
 }
 
@@ -37,6 +37,15 @@ echo ""
 # Example input: JOYC 310
 # Example output: See the screenshots in canvas
 
+function displayCoursesInLocation() {
+	echo ""
+	echo -n "Input class location: "
+	read userInput
+	cat courses.txt | grep -i "$userInput" | \
+	cut -d ';' -f 1,2,5,6,7 | sed 's/;/ | /g'
+}
+
+
 # TODO - 2
 # Make a function that displays all the courses that has availability
 # (seat number will be more than 0) for the given course code
@@ -44,13 +53,25 @@ echo ""
 # Example input: SEC
 # Example output: See the screenshots in canvas
 
+function displayCoursesWithAvailability() {
+	echo ""
+	echo -n "Input class prefix: "
+	read userInput
+
+	cat courses.txt | grep -i "$userInput" | \
+	cut -d ";" -f 1,2,4,5,6,7,10  | awk -F ';' '$3 > 0 {print $0}' | sed 's/;/ | /g'
+}
+
 while :
 do
 	echo ""
 	echo "Please select and option:"
 	echo "[1] Display courses of an instructor"
 	echo "[2] Display course count of instructors"
+	echo "[3] Display courses in a given classroom"
+	echo "[4] Display available course of subject"
 	echo "[5] Exit"
+	echo -n "Input choice: "
 
 	read userInput
 	echo ""
@@ -65,6 +86,14 @@ do
 	elif [[ "$userInput" == "2" ]]; then
 		courseCountofInsts
 
+	elif [[ "$userInput" == "3" ]]; then
+		displayCoursesInLocation
+
+	elif [[ "$userInput" == "4" ]]; then
+		displayCoursesWithAvailability
+
 	# TODO - 3 Display a message, if an invalid input is given
-	fi
+else 
+	echo "Invalid input."
+fi
 done
