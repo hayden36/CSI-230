@@ -15,7 +15,7 @@ toolOutput=$(echo "$fullPage" | \
 
 # # Processing HTML with sed
 # # 1- Replacing every </tr> with a line break
-echo "$toolOutput"  | \
+echo -n "$toolOutput"  | \
 sed -e 's/<\/tr>/\n/g' | \
 sed -e 's/<tr>//g' | \
 sed -e 's/<td[^>]*>//g' | \
